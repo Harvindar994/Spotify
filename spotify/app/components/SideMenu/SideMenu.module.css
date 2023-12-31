@@ -1,0 +1,30 @@
+.SideMenu {
+  background-color: var(--gray-3);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.OptionsMenuButton {
+  font-size: 1.4rem;
+  background-color: transparent;
+  border: none;
+  outline: none;
+  color: var(--gray-12);
+}
+
+.icon {
+  transform: rotate(90deg);
+}
+
+.ScrollArea {
+  width: 360px;
+  /* height: 630px; */
+  height: calc(100vh - 320px);
+  margin-top: 60px;
+}
+
+.menuContainer {
+  width: 100%;
+  padding: 15px 10px;
+}

@@ -1,0 +1,41 @@
+.header {
+  display: flex;
+  align-items: center;
+  padding: 30px 30px;
+}
+
+.pageNavigationGroup {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  padding-right: 30px;
+}
+
+.profileGroup {
+  display: flex;
+  align-items: center;
+  gap: 15px;
+}
+
+.nextButton {
+  transform: rotate(180deg);
+}
+
+.button {
+  cursor: pointer;
+}
+
+.searchField {
+  width: 350px;
+}
+
+.spacer {
+  flex: 1;
+}
+
+.content {
+  margin: 20px 30px 0px 30px;
+  width: calc(101% - 60px);
+  height: calc(100vh - 290.5px);
+  margin-top: 40px;
+}

@@ -1,0 +1,69 @@
+.Player {
+  width: 100%;
+  height: 127.5px;
+  background-color: var(--gray-4);
+  display: flex;
+  align-items: center;
+}
+
+.currentTrack {
+  display: flex;
+  align-items: center;
+  gap: 20px;
+  height: 100%;
+  padding: 0px 30px;
+  width: 360px;
+}
+
+.trackDescription {
+  display: flex;
+  gap: 3px;
+  flex-direction: column;
+}
+
+.trackname {
+  text-transform: uppercase;
+  font-weight: 500;
+}
+
+.trackArtist {
+  font-size: 0.8rem;
+}
+
+.controllers {
+}
+
+.timeline {
+  flex: 1;
+  display: flex;
+  gap: 20px;
+  align-items: center;
+}
+
+.slider {
+  flex: 1;
+}
+
+.remainTime {
+}
+
+.runningTime {
+}
+
+.options {
+  display: flex;
+  gap: 10px;
+  font-size: 1.3rem;
+  padding: 0px 40px;
+}
+
+.option {
+  padding: 7px;
+  border-radius: 100%;
+  cursor: pointer;
+}
+
+.optionActive {
+  background-color: var(--gray-6);
+  color: var(--white-12);
+}

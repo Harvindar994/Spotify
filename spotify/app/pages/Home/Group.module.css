@@ -1,0 +1,30 @@
+.group {
+  display: flex;
+  gap: 20px;
+  flex-direction: column;
+}
+
+.header {
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+}
+
+.heading {
+  text-transform: uppercase;
+  font-size: 1.3rem;
+  font-weight: 600;
+}
+
+.description {
+  font-size: 0.8rem;
+  color: var(--gray-11);
+}
+
+.content {
+  /* background-color: var(--gray-3); */
+  border-radius: 8px;
+  overflow: hidden;
+  /* width: calc(100vw - 420px); */
+  width: 99%;
+}

@@ -1,0 +1,21 @@
+.optionGroup {
+  padding: 0px 0px;
+}
+
+.options {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.groupName {
+  font-size: 0.8rem;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+  padding: 24px 40px;
+}
+
+.groupName h1 {
+  border-bottom: 2px solid var(--gray-5);
+  padding: 6px 0px;
+}
