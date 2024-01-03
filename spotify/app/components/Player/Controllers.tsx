@@ -23,9 +23,9 @@ const Controllers = () => {
     return (
         <div className={styles.controllers}>
             <div className={styles.previous}><IoChevronBack /></div>
-            <div className={styles.playPause}>
-                {!isPlaying && <div className={styles.play} onClick={onPlay}><FaPlay/></div>}
-                {isPlaying && <div className={styles.pause} onClick={onPlay}><GiPauseButton /></div>}
+            <div className={styles.playPause} onClick={onPlay}>
+                {!isPlaying && <div className={styles.play}><FaPlay/></div>}
+                {isPlaying && <div className={styles.pause}><GiPauseButton /></div>}
             </div>
             <div className={styles.next}><IoChevronBack /></div>
         </div>
