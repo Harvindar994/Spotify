@@ -8,19 +8,31 @@ import { useState } from 'react';
 import { TextFieldInput } from '@radix-ui/themes';
 import { Switch } from '@radix-ui/themes';
 import Link from 'next/link';
+import { MdLightMode } from "react-icons/md";
+import { MdDarkMode } from "react-icons/md";
+import { IconButton } from '@radix-ui/themes';
 
 const Login = () => {
     const [currentPage, setCurrentPage] = useState("Home");
-    const [theme, setTheme] = useState("dark");
+    const [theme, setTheme] = useState("light");
 
-    function handlePageChange(name: string){
-        setCurrentPage(name);
+    function changeTheme(){
+        if (theme === "dark"){
+        setTheme("light");
+        }
+        else{
+        setTheme("dark");
+        }
     }
 
     return (
         <Theme appearance={theme} className={styles.fullScreen}>
             <div className={styles.header}>
                 <Image src="/Spotify logo.png" alt='Spotify' width={130} height={130} className={styles.logo}/>
+                <div className={styles.spacer}></div>
+                <IconButton size="2" radius='full' className={styles.button} onClick={changeTheme} variant="soft">
+                    {theme == "dark" ? <MdLightMode />: <MdDarkMode />}
+                </IconButton>
             </div>
             <div className={styles.loginForm}>
                 <div className={styles.title}>Sign up to start <br/> listening</div>
