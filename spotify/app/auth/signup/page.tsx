@@ -13,15 +13,26 @@ import { MdDarkMode } from "react-icons/md";
 import { IconButton } from '@radix-ui/themes';
 import axios from 'axios';
 import { ColorRing } from 'react-loader-spinner';
+import { AlertDialog } from '@radix-ui/themes';
+import { Flex } from '@radix-ui/themes';
+import { UserValidation } from '@/app/DataValidation/user';
+import {z} from "zod";
+import { useForm } from 'react-hook-form';
+import { zodResolver } from '@hookform/resolvers/zod';
+
+type User = z.infer<typeof UserValidation>;
 
 const Login = () => {
-    const [currentPage, setCurrentPage] = useState("Home");
     const [theme, setTheme] = useState("dark");
     const [creatingAccount, setCreatingAccount] = useState(false);
-    const [user, setUser] = useState({
-        name: "",
-        email: "",
-        password: ""
+    const [popupMessage, setPopupMessage] = useState({
+        color: "red",
+        title: "",
+        message: ""
+    });
+
+    const {register, handleSubmit, formState: { errors }} = useForm<User>({
+        resolver: zodResolver(UserValidation)
     })
 
     function changeTheme(){
@@ -32,33 +43,52 @@ const Login = () => {
             setTheme("dark");
         }
     }
-
-    function handleFormChanges(event: any){
-        const {name, value} = event.currentTarget;
-        setUser({
-            ...user,
-            [name]: value
-        })
-    }
-
-    async function onFormSubmit(event: any){
+    
+    async function onFormSubmit(data: User){
         if (creatingAccount){
             return;
         }
         setCreatingAccount(true);
-        event.preventDefault();
-        console.log("working");
         try {
-            const respose = await axios.post("/api/users/signup", user);
-            console.log(respose);
-        } catch (error) {
-            console.log(error);
+            const response = await axios.post("/api/users/signup", data);
+
+            setPopupMessage({
+                color: "green",
+                message: response.data.message,
+                title: "Account created"
+            });
+
+        } catch (error: any) {
+            setPopupMessage({
+                color: "red",
+                message: error.response.data.error,
+                title: "Error"
+            });
         }
         setCreatingAccount(false);
     }
 
     return (
         <Theme appearance={theme} className={styles.fullScreen}>
+            <AlertDialog.Root open={popupMessage.message != ""}>
+                <AlertDialog.Content style={{ maxWidth: 450 }}>
+                    <AlertDialog.Title>{popupMessage.title}</AlertDialog.Title>
+                    <AlertDialog.Description size="2">
+                    {popupMessage.message}
+                    </AlertDialog.Description>
+
+                    <Flex gap="3" mt="4" justify="end">
+                        <AlertDialog.Cancel>
+                            <Button variant="solid" color={popupMessage.color} onClick={()=>{
+                                setPopupMessage({...popupMessage, message: ""})
+                            }}>
+                            Ok
+                            </Button>
+                        </AlertDialog.Cancel>
+                    </Flex>
+                </AlertDialog.Content>
+            </AlertDialog.Root>
+            
             <div className={styles.header}>
                 <Image src="/Spotify logo.png" alt='Spotify' width={130} height={130} className={styles.logo}/>
                 <div className={styles.spacer}></div>
@@ -66,20 +96,20 @@ const Login = () => {
                     {theme == "dark" ? <MdLightMode />: <MdDarkMode />}
                 </IconButton>
             </div>
-            <form className={styles.loginForm} onSubmit={onFormSubmit}>
+            <form className={styles.loginForm} onSubmit={handleSubmit(onFormSubmit)}>
                 <div className={styles.title}>Sign up to start <br/> listening</div>
                 <div className={styles.fields}>
                     <div className={styles.field}>
                         <div className={styles.fieldName}>Name</div>
-                        <TextFieldInput placeholder="Name" size="3" onChange={handleFormChanges} value={user.name} name='name' className={styles.fieldInput}/>
+                        <TextFieldInput placeholder="Name" size="3" {...register("name")} className={styles.fieldInput}/>
                     </div>
                     <div className={styles.field}>
                         <div className={styles.fieldName}>Email address</div>
-                        <TextFieldInput placeholder="Email or username" size="3" onChange={handleFormChanges} value={user.email} name='email' className={styles.fieldInput}/>
+                        <TextFieldInput placeholder="Email or username" size="3" {...register("email")} className={styles.fieldInput}/>
                     </div>
                     <div className={styles.field}>
                         <div className={styles.fieldName}>Password</div>
-                        <TextFieldInput placeholder="Password" size="3" onChange={handleFormChanges} value={user.password} type='password' name='password' className={styles.fieldInput}/>
+                        <TextFieldInput placeholder="Password" size="3" {...register("password")} className={styles.fieldInput}/>
                     </div>
                     <div className={styles.fieldRemember}>
                         <Checkbox/>
