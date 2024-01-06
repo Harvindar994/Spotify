@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import styles from "./HomePage.module.css";
-import { IconButton } from '@radix-ui/themes';
+import { DropdownMenuContent, DropdownMenuSeparator, DropdownMenuSub, DropdownMenuSubContent, DropdownMenuSubTrigger, DropdownMenuTrigger, IconButton } from '@radix-ui/themes';
 import { TextFieldInput } from '@radix-ui/themes';
 import { Avatar } from '@radix-ui/themes';
 import { IoIosArrowBack } from "react-icons/io";
@@ -12,6 +12,10 @@ import RecentPlayedCard from './RecentPlayedCard';
 import MadeForYouCard from './MadeForYouCard';
 import { MdLightMode } from "react-icons/md";
 import { MdDarkMode } from "react-icons/md";
+import { DropdownMenuRoot } from '@radix-ui/themes';
+import { DropdownMenuItem } from '@radix-ui/themes';
+import axios from 'axios';
+import { useRouter } from 'next/navigation';
 
 interface Props{
   handleThemeChange: CallableFunction;
@@ -19,6 +23,7 @@ interface Props{
 
 const HomePage = (props: Props) => {
   const [theme, setTheme] = useState("dark");
+  const router = useRouter();
   const temp_img = "https://images.unsplash.com/photo-1502823403499-6ccfcf4fb453?&w=256&h=256&q=70&crop=focalpoint&fp-x=0.5&fp-y=0.3&fp-z=1&fit=crop";
 
   function changeTheme(){
@@ -29,6 +34,19 @@ const HomePage = (props: Props) => {
       setTheme("dark");
     }
     props.handleThemeChange(theme);
+  }
+
+  async function logout(){
+    try {
+
+      const response = await axios.get("/api/users/logout");
+
+      console.log(response);
+      router.push("/auth/login");
+      
+    } catch (error: any) {
+      console.log(error.message);
+    }
   }
 
   return (
@@ -47,12 +65,23 @@ const HomePage = (props: Props) => {
           </IconButton>
           <IconButton size="2" radius='full' className={styles.button}><IoIosSettings /></IconButton>
           <IconButton size="2" radius='full' className={styles.button}><FaBell /></IconButton>
-          <Avatar
-            src="https://images.unsplash.com/photo-1502823403499-6ccfcf4fb453?&w=256&h=256&q=70&crop=focalpoint&fp-x=0.5&fp-y=0.3&fp-z=1&fit=crop"
-            fallback="A"
-            radius='full'
-            size="4"
-          />
+          <DropdownMenuRoot>
+              <DropdownMenuTrigger>
+                  <Avatar
+                    src="https://images.unsplash.com/photo-1502823403499-6ccfcf4fb453?&w=256&h=256&q=70&crop=focalpoint&fp-x=0.5&fp-y=0.3&fp-z=1&fit=crop"
+                    fallback="A"
+                    radius='full'
+                    size="4"
+                  />
+              </DropdownMenuTrigger>
+              <DropdownMenuContent>
+                  <DropdownMenuItem shortcut="⌘ E">Profile</DropdownMenuItem>
+                  <DropdownMenuSeparator />
+                  <DropdownMenuItem onClick={logout} shortcut="⌘ ⌫" color="red">
+                  Logout
+                  </DropdownMenuItem>
+              </DropdownMenuContent>
+          </DropdownMenuRoot>
         </div>
       </div>
       <div className={styles.content}>
