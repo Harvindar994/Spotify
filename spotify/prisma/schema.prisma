@@ -16,7 +16,7 @@ model User {
   email               String    @unique
   password            String
   isVerfied           Boolean   @default(false)
-  forgotPasswordToken DateTime?
+  forgotPasswordToken String?
   forgotTokenExpiry   DateTime?
   verifyToken         String?
   verifyTokenExpiry   DateTime?

@@ -104,7 +104,7 @@ const Login = () => {
                             colors={['var(--gray-12)', 'var(--gray-12)', 'var(--gray-12)', 'var(--gray-12)', 'var(--gray-12)']}
                             />: "Login"} 
                     </Button>
-                    <Link href="/" className={styles.forgetPassword}>Forget your password?</Link>
+                    <Link href="/auth/forgotPassword" className={styles.forgetPassword}>Forget your password?</Link>
                     <Link href="/auth/signup" className={styles.forgetPassword}>Don't have an account? Sign up for Spotify</Link>
                 </form>
             </div>
